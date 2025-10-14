@@ -28,3 +28,4 @@ C:\Quiz_App_Oblig\Factify\obj\Debug\net8.0\refint\Factify.dll
 C:\Quiz_App_Oblig\Factify\obj\Debug\net8.0\Factify.pdb
 C:\Quiz_App_Oblig\Factify\obj\Debug\net8.0\Factify.genruntimeconfig.cache
 C:\Quiz_App_Oblig\Factify\obj\Debug\net8.0\ref\Factify.dll
+C:\Quiz_App_Oblig\Factify\obj\Debug\net8.0\Factify.sourcelink.json
