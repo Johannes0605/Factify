@@ -12,6 +12,6 @@ namespace QuizApp.Models
         public int QuizId { get; set; }
         public Quiz? Quiz { get; set; }
 
-        public List<Answer> Answers { get; set; } = new();
+        public List<Options> Options { get; set; } = new();
     }
 }

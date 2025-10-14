@@ -20,11 +20,11 @@ namespace QuizApp.DAL
                         new Question
                         {
                             QuestionText = "What is 2 + 2?",
-                            Answers = new List<Answer>
+                            Options = new List<Options>
                             {
-                                new Answer { Text = "3", IsCorrect = false },
-                                new Answer { Text = "4", IsCorrect = true },
-                                new Answer { Text = "5", IsCorrect = false }
+                                new Options { Text = "3", IsCorrect = false },
+                                new Options { Text = "4", IsCorrect = true },
+                                new Options { Text = "5", IsCorrect = false }
                             }
                         }
                     }

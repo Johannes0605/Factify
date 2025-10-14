@@ -3,10 +3,10 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace QuizApp.Models
 {
-    public class options
+    public class Options
     {
         [Key]
-        public int optionsId { get; set; }
+        public int OptionsId { get; set; }
 
         [Required, StringLength(300)]
         public string Text { get; set; } = string.Empty;

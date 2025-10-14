@@ -36,13 +36,13 @@ namespace QuizApp.Controllers
             foreach (var question in quiz.Questions)
             {
                 total++;
-                var correctAnswers = question.Answers
+                var correctAnswers = question.Options
                     .Where(a => a.IsCorrect)
-                    .Select(a => a.AnswerId)
+                    .Select(a => a.OptionsId)
                     .ToList();
 
                 var chosen = selectedAnswers
-                    .Where(id => question.Answers.Any(a => a.AnswerId == id))
+                    .Where(id => question.Options.Any(a => a.OptionsId == id))
                     .ToList();
 
                 if (chosen.SequenceEqual(correctAnswers))
