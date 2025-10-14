@@ -21,11 +21,36 @@ body {
   margin-bottom: 60px;
 }
 
-/* Quiz form validation styles */
-.question-card.has-error {
-  border-left: 4px solid #dc3545 !important;
+/* Form validation styles */
+.form-control.is-invalid,
+.form-check-input.is-invalid {
+  border-color: #dc3545;
 }
 
+.form-control.is-invalid:focus,
+.form-check-input.is-invalid:focus {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 0.25rem rgba(220, 53, 69, 0.25);
+}
+
+.invalid-feedback {
+  display: block;
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 0.25rem;
+}
+
+/* Question card error styling */
+.question-card.has-validation-error {
+  border-left: 4px solid #dc3545;
+}
+
+.question-card.has-validation-error .card-header {
+  background-color: #f8d7da;
+  border-color: #f5c2c7;
+}
+
+/* Validation error alert */
 .validation-error {
   animation: shake 0.5s;
 }
