@@ -14,7 +14,7 @@ namespace QuizApp.Controllers
             _logger = logger;
         }
 
-        public async Task<IActionResult> Start(int id)
+        public async Task<IActionResult> Take(int id)
         {
             var quiz = await _repository.GetQuizByIdAsync(id);
             if (quiz == null) return NotFound();

@@ -1,0 +1,47 @@
+@{
+    ViewData["Title"] = "Quiz Results";
+    var score = ViewBag.Score ?? 0;
+    var total = ViewBag.Total ?? 0;
+    var percentage = total > 0 ? (score * 100.0 / total) : 0;
+}
+
+<div class="container mt-4">
+    <div class="text-center">
+        <h1 class="mb-4">Quiz Results</h1>
+        
+        <div class="card mx-auto" style="max-width: 600px;">
+            <div class="card-body">
+                <div class="mb-4">
+                    <h2 class="display-4">@score / @total</h2>
+                    <p class="lead">@percentage.ToString("F1")%</p>
+                </div>
+
+                @if (percentage >= 80)
+                {
+                    <div class="alert alert-success" role="alert">
+                        <h4 class="alert-heading">Excellent!</h4>
+                        <p>Great job! You really know your stuff.</p>
+                    </div>
+                }
+                else if (percentage >= 60)
+                {
+                    <div class="alert alert-info" role="alert">
+                        <h4 class="alert-heading">Good Job!</h4>
+                        <p>You did well, but there's room for improvement.</p>
+                    </div>
+                }
+                else
+                {
+                    <div class="alert alert-warning" role="alert">
+                        <h4 class="alert-heading">Keep Practicing!</h4>
+                        <p>Don't give up! Review the material and try again.</p>
+                    </div>
+                }
+
+                <div class="mt-4">
+                    <a asp-controller="Quiz" asp-action="Index" class="btn btn-primary">Back to Quizzes</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
