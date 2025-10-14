@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Factify")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3b040fb16b5ff2380d3ca071252dcb2b040e7a94")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a3f32300b697099e08e49bc70d2328ae3b83a426")]
 [assembly: System.Reflection.AssemblyProductAttribute("Factify")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Factify")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

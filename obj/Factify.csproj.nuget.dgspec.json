@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\sunns\\OneDrive\\Dokumenter vgs\\GitHub\\Factify\\Factify.csproj": {}
+    "C:\\Quiz_App_Oblig\\Factify\\Factify.csproj": {}
   },
   "projects": {
-    "C:\\Users\\sunns\\OneDrive\\Dokumenter vgs\\GitHub\\Factify\\Factify.csproj": {
+    "C:\\Quiz_App_Oblig\\Factify\\Factify.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\sunns\\OneDrive\\Dokumenter vgs\\GitHub\\Factify\\Factify.csproj",
+        "projectUniqueName": "C:\\Quiz_App_Oblig\\Factify\\Factify.csproj",
         "projectName": "Factify",
-        "projectPath": "C:\\Users\\sunns\\OneDrive\\Dokumenter vgs\\GitHub\\Factify\\Factify.csproj",
-        "packagesPath": "C:\\Users\\sunns\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\sunns\\OneDrive\\Dokumenter vgs\\GitHub\\Factify\\obj\\",
+        "projectPath": "C:\\Quiz_App_Oblig\\Factify\\Factify.csproj",
+        "packagesPath": "C:\\Users\\johan\\.nuget\\packages\\",
+        "outputPath": "C:\\Quiz_App_Oblig\\Factify\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\sunns\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\johan\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
