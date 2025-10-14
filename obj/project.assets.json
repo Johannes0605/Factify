@@ -8,19 +8,19 @@
     "net8.0": []
   },
   "packageFolders": {
-    "C:\\Users\\johan\\.nuget\\packages\\": {}
+    "C:\\Users\\sunns\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Quiz_App_Oblig\\Factify\\Factify.csproj",
+      "projectUniqueName": "C:\\Users\\sunns\\OneDrive\\Dokumenter vgs\\GitHub\\Factify\\Factify.csproj",
       "projectName": "Factify",
-      "projectPath": "C:\\Quiz_App_Oblig\\Factify\\Factify.csproj",
-      "packagesPath": "C:\\Users\\johan\\.nuget\\packages\\",
-      "outputPath": "C:\\Quiz_App_Oblig\\Factify\\obj\\",
+      "projectPath": "C:\\Users\\sunns\\OneDrive\\Dokumenter vgs\\GitHub\\Factify\\Factify.csproj",
+      "packagesPath": "C:\\Users\\sunns\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\sunns\\OneDrive\\Dokumenter vgs\\GitHub\\Factify\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\johan\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\sunns\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
