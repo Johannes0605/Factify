@@ -9,14 +9,12 @@ namespace QuizApp.Controllers
         private readonly IQuizRepository _repository;
         private readonly ILogger<QuizController> _logger;
 
-        // ✅ Bruk repository og logger i stedet for DbContext
         public QuizController(IQuizRepository repository, ILogger<QuizController> logger)
         {
             _repository = repository;
             _logger = logger;
         }
 
-        // GET: /Quiz
         public async Task<IActionResult> Index()
         {
             try
@@ -31,7 +29,6 @@ namespace QuizApp.Controllers
             }
         }
 
-        // GET: /Quiz/Details/5
         public async Task<IActionResult> Details(int id)
         {
             try
@@ -51,11 +48,8 @@ namespace QuizApp.Controllers
                 return StatusCode(500, "An unexpected error occurred.");
             }
         }
-
-        // GET: /Quiz/Create
         public IActionResult Create() => View();
 
-        // POST: /Quiz/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(Quiz quiz)
@@ -76,7 +70,6 @@ namespace QuizApp.Controllers
             return View(quiz);
         }
 
-        // GET: /Quiz/Edit/5
         public async Task<IActionResult> Edit(int id)
         {
             var quiz = await _repository.GetQuizByIdAsync(id);
@@ -84,7 +77,6 @@ namespace QuizApp.Controllers
             return View(quiz);
         }
 
-        // POST: /Quiz/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, Quiz quiz)
@@ -107,7 +99,6 @@ namespace QuizApp.Controllers
             return View(quiz);
         }
 
-        // GET: /Quiz/Delete/5
         public async Task<IActionResult> Delete(int id)
         {
             var quiz = await _repository.GetQuizByIdAsync(id);
@@ -115,7 +106,6 @@ namespace QuizApp.Controllers
             return View(quiz);
         }
 
-        // POST: /Quiz/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)

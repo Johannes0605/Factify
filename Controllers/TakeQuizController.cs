@@ -14,7 +14,6 @@ namespace QuizApp.Controllers
             _logger = logger;
         }
 
-        // GET: /QuizPlay/Start/5
         public async Task<IActionResult> Start(int id)
         {
             var quiz = await _repository.GetQuizByIdAsync(id);
@@ -23,7 +22,6 @@ namespace QuizApp.Controllers
             return View(quiz);
         }
 
-        // POST: /QuizPlay/Submit
         [HttpPost]
         public async Task<IActionResult> Submit(int quizId, List<int> selectedAnswers)
         {

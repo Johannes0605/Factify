@@ -3,6 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace QuizApp.Models
 {
+    // Represents an answer option for a quiz question
     public class Options
     {
         [Key]

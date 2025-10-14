@@ -2,6 +2,7 @@ using QuizApp.Models;
 
 namespace QuizApp.DAL
 {
+    // Repository interface for Quiz operations
     public interface IQuizRepository
     {
         Task<List<Quiz>> GetAllQuizzesAsync();

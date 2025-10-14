@@ -2,6 +2,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace QuizApp.Models
 {
+    // Represents a quiz question
     public class Question
     {
         public int QuestionId { get; set; }

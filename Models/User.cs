@@ -1,6 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
+// Represents a user in the quiz application
 namespace QuizApp.Models
 {
     public class User

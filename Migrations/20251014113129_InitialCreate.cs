@@ -4,12 +4,13 @@
 
 namespace Factify.Migrations
 {
-    /// <inheritdoc />
+    // Initial migration to create database schema
     public partial class InitialCreate : Migration
     {
-        /// <inheritdoc />
+        // Apply migration
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            // Create Quizzes table
             migrationBuilder.CreateTable(
                 name: "Quizzes",
                 columns: table => new
@@ -19,11 +20,13 @@ namespace Factify.Migrations
                     Title = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
                     Description = table.Column<string>(type: "TEXT", maxLength: 500, nullable: true)
                 },
+                // Define primary key
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Quizzes", x => x.QuizId);
                 });
 
+            // Create Users table
             migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
@@ -80,18 +83,19 @@ namespace Factify.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            // Create indexes for foreign keys
             migrationBuilder.CreateIndex(
                 name: "IX_Options_QuestionId",
                 table: "Options",
                 column: "QuestionId");
 
+            // Index for Questions' foreign key to Quizzes
             migrationBuilder.CreateIndex(
                 name: "IX_Questions_QuizId",
                 table: "Questions",
                 column: "QuizId");
         }
-
-        /// <inheritdoc />
+        // Revert migration
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(

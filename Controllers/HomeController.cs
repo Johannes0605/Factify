@@ -23,6 +23,7 @@ public class HomeController : Controller
         return View();
     }
 
+    // Error handling
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {

@@ -13,7 +13,7 @@ namespace Factify.Migrations
     [Migration("20251014113129_InitialCreate")]
     partial class InitialCreate
     {
-        /// <inheritdoc />
+        // Build the target model for the migration
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
@@ -43,6 +43,7 @@ namespace Factify.Migrations
                     b.ToTable("Options");
                 });
 
+            // Define Question entity
             modelBuilder.Entity("QuizApp.Models.Question", b =>
                 {
                     b.Property<int>("QuestionId")
@@ -64,6 +65,7 @@ namespace Factify.Migrations
                     b.ToTable("Questions");
                 });
 
+            // Define Quiz entity
             modelBuilder.Entity("QuizApp.Models.Quiz", b =>
                 {
                     b.Property<int>("QuizId")
@@ -141,6 +143,8 @@ namespace Factify.Migrations
                 {
                     b.Navigation("Questions");
                 });
+
+// Define navigation properties
 #pragma warning restore 612, 618
         }
     }
