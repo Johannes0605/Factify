@@ -6,27 +6,215 @@
 
 <h1>Edit Quiz</h1>
 
-<form asp-action="Edit" method="post">
+<form asp-action="Edit" method="post" id="quizForm">
     <input type="hidden" asp-for="QuizId" />
 
-    <div class="form-group">
-        <label asp-for="Title" class="form-label"></label>
-        <input asp-for="Title" class="form-control" />
-        <span asp-validation-for="Title" class="text-danger"></span>
+    <div class="card mb-4">
+        <div class="card-header bg-primary text-white">
+            <h5 class="mb-0">Quiz Information</h5>
+        </div>
+        <div class="card-body">
+            <div class="form-group mb-3">
+                <label asp-for="Title" class="form-label"></label>
+                <input asp-for="Title" class="form-control" />
+                <span asp-validation-for="Title" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="Description" class="form-label"></label>
+                <textarea asp-for="Description" class="form-control" rows="3"></textarea>
+            </div>
+        </div>
     </div>
 
-    <div class="form-group mt-3">
-        <label asp-for="Description" class="form-label"></label>
-        <textarea asp-for="Description" class="form-control"></textarea>
+    <div class="card mb-4">
+        <div class="card-header bg-success text-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0">Questions</h5>
+            <button type="button" class="btn btn-light btn-sm" onclick="addQuestion()">
+                ➕ Add Question
+            </button>
+        </div>
+        <div class="card-body">
+            <div id="questionsContainer">
+                @* Render existing questions *@
+                @if (Model.Questions != null && Model.Questions.Any())
+                {
+                    @for (int qIndex = 0; qIndex < Model.Questions.Count; qIndex++)
+                    {
+                        var question = Model.Questions[qIndex];
+                        <div class="card mb-3 question-card" id="question-@qIndex">
+                            <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                                <h6 class="mb-0">Question @(qIndex + 1)</h6>
+                                <button type="button" class="btn btn-danger btn-sm" onclick="removeQuestion(@qIndex)">
+                                    🗑️ Remove
+                                </button>
+                            </div>
+                            <div class="card-body">
+                                <input type="hidden" name="Questions[@qIndex].QuestionId" value="@question.QuestionId" />
+                                
+                                <div class="form-group mb-3">
+                                    <label class="form-label">Question Text</label>
+                                    <input type="text" name="Questions[@qIndex].QuestionText" 
+                                           value="@question.QuestionText" class="form-control" required />
+                                </div>
+                                
+                                <div class="mb-2">
+                                    <strong>Answer Options:</strong>
+                                    <button type="button" class="btn btn-sm btn-outline-primary ms-2" onclick="addOption(@qIndex)">
+                                        ➕ Add Option
+                                    </button>
+                                </div>
+                                
+                                <div id="optionsContainer-@qIndex" class="ms-3">
+                                    @* Render existing options *@
+                                    @if (question.Options != null && question.Options.Any())
+                                    {
+                                        @for (int oIndex = 0; oIndex < question.Options.Count; oIndex++)
+                                        {
+                                            var option = question.Options[oIndex];
+                                            <div class="row mb-2 align-items-center option-row" id="question-@qIndex-option-@oIndex">
+                                                <input type="hidden" name="Questions[@qIndex].Options[@oIndex].OptionsId" value="@option.OptionsId" />
+                                                
+                                                <div class="col-md-1">
+                                                    <div class="form-check">
+                                                        <input type="checkbox" name="Questions[@qIndex].Options[@oIndex].IsCorrect" 
+                                                               value="true" class="form-check-input" id="q@(qIndex)opt@(oIndex)"
+                                                               @(option.IsCorrect ? "checked" : "")>
+                                                        <input type="hidden" name="Questions[@qIndex].Options[@oIndex].IsCorrect" value="false">
+                                                        <label class="form-check-label small" for="q@(qIndex)opt@(oIndex)">Correct</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-9">
+                                                    <input type="text" name="Questions[@qIndex].Options[@oIndex].Text" 
+                                                           value="@option.Text" class="form-control form-control-sm" 
+                                                           placeholder="Enter option text" required />
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <button type="button" class="btn btn-sm btn-danger" onclick="removeOption(@qIndex, @oIndex)">
+                                                        Remove
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        }
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    }
+                }
+            </div>
+        </div>
     </div>
 
-    <button type="submit" class="btn btn-primary mt-3">Save Changes</button>
-    <a asp-action="Index" class="btn btn-secondary mt-3">Cancel</a>
+    <div class="mb-3">
+        <button type="submit" class="btn btn-primary">💾 Save Changes</button>
+        <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    </div>
 </form>
 
-@* Client-side validation scripts *@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    
+    <script>
+        let questionIndex = @(Model.Questions?.Count ?? 0);
+
+        function addQuestion() {
+            const container = document.getElementById('questionsContainer');
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'card mb-3 question-card';
+            questionDiv.id = `question-${questionIndex}`;
+            questionDiv.innerHTML = `
+                <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                    <h6 class="mb-0">Question ${questionIndex + 1}</h6>
+                    <button type="button" class="btn btn-danger btn-sm" onclick="removeQuestion(${questionIndex})">
+                        🗑️ Remove
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="form-group mb-3">
+                        <label class="form-label">Question Text</label>
+                        <input type="text" name="Questions[${questionIndex}].QuestionText" class="form-control" required />
+                    </div>
+                    
+                    <div class="mb-2">
+                        <strong>Answer Options:</strong>
+                        <button type="button" class="btn btn-sm btn-outline-primary ms-2" onclick="addOption(${questionIndex})">
+                            ➕ Add Option
+                        </button>
+                    </div>
+                    
+                    <div id="optionsContainer-${questionIndex}" class="ms-3">
+                        @* Options will be added here *@
+                    </div>
+                </div>
+            `;
+            container.appendChild(questionDiv);
+            
+            // Add 2 default options
+            addOption(questionIndex);
+            addOption(questionIndex);
+            
+            questionIndex++;
+        }
+
+        function removeQuestion(index) {
+            const questionDiv = document.getElementById(`question-${index}`);
+            if (questionDiv) {
+                questionDiv.remove();
+            }
+        }
+
+        let optionIndexes = {};
+        
+        // Initialize option indexes for existing questions
+        @if (Model.Questions != null && Model.Questions.Any())
+        {
+            @for (int qIndex = 0; qIndex < Model.Questions.Count; qIndex++)
+            {
+                <text>optionIndexes[@qIndex] = @(Model.Questions[qIndex].Options?.Count ?? 0);</text>
+            }
+        }
+
+        function addOption(questionIndex) {
+            if (!optionIndexes[questionIndex]) {
+                optionIndexes[questionIndex] = 0;
+            }
+            
+            const optionIndex = optionIndexes[questionIndex];
+            const container = document.getElementById(`optionsContainer-${questionIndex}`);
+            const optionDiv = document.createElement('div');
+            optionDiv.className = 'row mb-2 align-items-center option-row';
+            optionDiv.id = `question-${questionIndex}-option-${optionIndex}`;
+            optionDiv.innerHTML = `
+                <div class="col-md-1">
+                    <div class="form-check">
+                        <input type="checkbox" name="Questions[${questionIndex}].Options[${optionIndex}].IsCorrect" 
+                               value="true" class="form-check-input" id="q${questionIndex}opt${optionIndex}">
+                        <input type="hidden" name="Questions[${questionIndex}].Options[${optionIndex}].IsCorrect" value="false">
+                        <label class="form-check-label small" for="q${questionIndex}opt${optionIndex}">Correct</label>
+                    </div>
+                </div>
+                <div class="col-md-9">
+                    <input type="text" name="Questions[${questionIndex}].Options[${optionIndex}].Text" 
+                           class="form-control form-control-sm" placeholder="Enter option text" required />
+                </div>
+                <div class="col-md-2">
+                    <button type="button" class="btn btn-sm btn-danger" onclick="removeOption(${questionIndex}, ${optionIndex})">
+                        Remove
+                    </button>
+                </div>
+            `;
+            container.appendChild(optionDiv);
+            optionIndexes[questionIndex]++;
+        }
+
+        function removeOption(questionIndex, optionIndex) {
+            const optionDiv = document.getElementById(`question-${questionIndex}-option-${optionIndex}`);
+            if (optionDiv) {
+                optionDiv.remove();
+            }
+        }
+    </script>
 }
 
 
