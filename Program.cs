@@ -1,27 +1,81 @@
+using Microsoft.EntityFrameworkCore;
+
+using QuizApp.DAL;
+
+
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+
+
 builder.Services.AddControllersWithViews();
+
+
+
+// ✅ Legg til logging
+
+builder.Logging.ClearProviders();
+
+builder.Logging.AddConsole();
+
+builder.Logging.AddDebug();
+
+
+
+// ✅ Legg til DbContext
+
+builder.Services.AddDbContext<QuizDbContext>(options =>
+
+    options.UseSqlite(builder.Configuration["ConnectionStrings:QuizDbContextConnection"]));
+
+
+
+// ✅ Repository pattern
+
+builder.Services.AddScoped<IQuizRepository, QuizRepository>();
+
+
 
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (!app.Environment.IsDevelopment())
+
+
+if (app.Environment.IsDevelopment())
+
 {
-    app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-    app.UseHsts();
+
+    app.UseDeveloperExceptionPage();
+
+
+
+    using (var scope = app.Services.CreateScope())
+
+    {
+
+        var db = scope.ServiceProvider.GetRequiredService<QuizDbContext>();
+
+        db.Database.EnsureCreated();
+
+    }
+
+
+
+    DBInit.Seed(app); // ✅ sørg for at DBInit.cs eksisterer
+
 }
 
-app.UseHttpsRedirection();
+
+
 app.UseStaticFiles();
 
-app.UseRouting();
 
-app.UseAuthorization();
 
 app.MapControllerRoute(
-    name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
 
-app.Run();
+    name: "default",
+
+    pattern: "{controller=Quiz}/{action=Index}/{id?}");
+
+
+
+app.Run(); 

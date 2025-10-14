@@ -16,7 +16,7 @@ namespace QuizApp.DAL
         {
             return await _context.Quizzes
                 .Include(q => q.Questions)
-                    .ThenInclude(qs => qs.Answers)
+                    .ThenInclude(qs => qs.Options)
                 .ToListAsync();
         }
 
@@ -24,7 +24,7 @@ namespace QuizApp.DAL
         {
             return await _context.Quizzes
                 .Include(q => q.Questions)
-                    .ThenInclude(qs => qs.Answers)
+                    .ThenInclude(qs => qs.Options)
                 .FirstOrDefaultAsync(q => q.QuizId == id);
         }
 
