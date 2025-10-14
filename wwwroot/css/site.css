@@ -20,3 +20,18 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+/* Quiz form validation styles */
+.question-card.has-error {
+  border-left: 4px solid #dc3545 !important;
+}
+
+.validation-error {
+  animation: shake 0.5s;
+}
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+  20%, 40%, 60%, 80% { transform: translateX(5px); }
+}

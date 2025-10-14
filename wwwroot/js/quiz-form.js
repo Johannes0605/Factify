@@ -71,7 +71,8 @@ function addOption(questionIndex) {
         <div class="col-md-1">
             <div class="form-check">
                 <input type="checkbox" name="Questions[${questionIndex}].Options[${optionIndex}].IsCorrect" 
-                       value="true" class="form-check-input" id="q${questionIndex}opt${optionIndex}">
+                       value="true" class="form-check-input" id="q${questionIndex}opt${optionIndex}"
+                       onchange="clearValidationError(${questionIndex})">
                 <input type="hidden" name="Questions[${questionIndex}].Options[${optionIndex}].IsCorrect" value="false">
                 <label class="form-check-label small" for="q${questionIndex}opt${optionIndex}">Correct</label>
             </div>
@@ -96,3 +97,94 @@ function removeOption(questionIndex, optionIndex) {
         optionDiv.remove();
     }
 }
+
+// Clear validation error for a specific question when user checks a checkbox
+function clearValidationError(questionIndex) {
+    const questionCard = document.querySelector(`#question-${questionIndex}`);
+    if (questionCard) {
+        const cardHeader = questionCard.querySelector('.card-header');
+        const errorDiv = questionCard.querySelector('.validation-error');
+        
+        if (cardHeader) {
+            cardHeader.style.borderLeft = '';
+        }
+        
+        if (errorDiv) {
+            errorDiv.remove();
+        }
+    }
+}
+
+// Validation function to check if each question has at least one correct answer
+function validateQuizForm() {
+    const questionsContainer = document.getElementById('questionsContainer');
+    const questions = questionsContainer.querySelectorAll('.question-card');
+    
+    let isValid = true;
+    let errorMessages = [];
+    
+    // Remove existing error messages
+    document.querySelectorAll('.validation-error').forEach(el => el.remove());
+    
+    questions.forEach((questionCard, index) => {
+        const questionId = questionCard.id;
+        const checkboxes = questionCard.querySelectorAll('input[type="checkbox"][value="true"]');
+        const hasCorrectAnswer = Array.from(checkboxes).some(cb => cb.checked);
+        
+        if (!hasCorrectAnswer) {
+            isValid = false;
+            const questionNumber = index + 1;
+            errorMessages.push(`Question ${questionNumber}`);
+            
+            // Add visual error indicator to the question card
+            const cardHeader = questionCard.querySelector('.card-header');
+            cardHeader.style.borderLeft = '4px solid #dc3545';
+            
+            // Add error message below the question
+            const optionsContainer = questionCard.querySelector('[id^="optionsContainer-"]');
+            const errorDiv = document.createElement('div');
+            errorDiv.className = 'alert alert-danger mt-2 validation-error';
+            errorDiv.innerHTML = '<strong>Error:</strong> Please choose at least one correct answer for this question.';
+            optionsContainer.parentNode.insertBefore(errorDiv, optionsContainer.nextSibling);
+        } else {
+            // Remove error styling if it exists
+            const cardHeader = questionCard.querySelector('.card-header');
+            cardHeader.style.borderLeft = '';
+        }
+    });
+    
+    if (!isValid) {
+        // Scroll to the first error
+        const firstError = document.querySelector('.validation-error');
+        if (firstError) {
+            firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+        
+        // Show summary error at the top
+        const form = document.getElementById('quizForm');
+        const summaryError = document.createElement('div');
+        summaryError.className = 'alert alert-danger alert-dismissible fade show validation-error';
+        summaryError.innerHTML = `
+            <strong>Validation Error:</strong> Please choose correct answer(s) for the following questions: ${errorMessages.join(', ')}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        `;
+        form.insertBefore(summaryError, form.firstChild);
+        
+        return false;
+    }
+    
+    return true;
+}
+
+// Add form submit event listener
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.getElementById('quizForm');
+    if (form) {
+        form.addEventListener('submit', function(e) {
+            if (!validateQuizForm()) {
+                e.preventDefault();
+                return false;
+            }
+        });
+    }
+});

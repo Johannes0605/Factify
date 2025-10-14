@@ -73,7 +73,8 @@
                                                     <div class="form-check">
                                                         <input type="checkbox" name="Questions[@qIndex].Options[@oIndex].IsCorrect" 
                                                                value="true" class="form-check-input" id="q@(qIndex)opt@(oIndex)"
-                                                               @(option.IsCorrect ? "checked" : "")>
+                                                               @(option.IsCorrect ? "checked" : "")
+                                                               onchange="clearValidationError(@qIndex)">
                                                         <input type="hidden" name="Questions[@qIndex].Options[@oIndex].IsCorrect" value="false">
                                                         <label class="form-check-label small" for="q@(qIndex)opt@(oIndex)">Correct</label>
                                                     </div>
