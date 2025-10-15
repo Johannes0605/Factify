@@ -15,11 +15,13 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
+        // Render the home page
         return View();
     }
 
     public IActionResult Privacy()
     {
+        // Render the privacy page
         return View();
     }
 
@@ -27,6 +29,7 @@ public class HomeController : Controller
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
     {
+        // Return the Error view with a RequestId for troubleshooting
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
 }

@@ -19,11 +19,15 @@ namespace QuizApp.Controllers
         {
             try
             {
+                // Retrieve all quizzes (including related questions/options) asynchronously
                 var quizzes = await _repository.GetAllQuizzesAsync();
+
+                // Pass the list to the Index view for rendering
                 return View(quizzes);
             }
             catch (Exception ex)
             {
+                // Log unexpected errors and return a generic 500 response
                 _logger.LogError(ex, "Error while loading quizzes.");
                 return StatusCode(500, "An error occurred while fetching quizzes.");
             }
@@ -33,9 +37,11 @@ namespace QuizApp.Controllers
         {
             try
             {
+                // Look up a single quiz by id, including its related data
                 var quiz = await _repository.GetQuizByIdAsync(id);
                 if (quiz == null)
                 {
+                    // If not found, warn and return 404
                     _logger.LogWarning("Quiz with ID {Id} not found.", id);
                     return NotFound();
                 }
@@ -44,6 +50,7 @@ namespace QuizApp.Controllers
             }
             catch (Exception ex)
             {
+                // Log and return a 500 for unexpected exceptions
                 _logger.LogError(ex, "Error fetching quiz details for ID {Id}", id);
                 return StatusCode(500, "An unexpected error occurred.");
             }
@@ -58,11 +65,13 @@ namespace QuizApp.Controllers
             {
                 try
                 {
+                    // Persist new quiz via repository and redirect back to list on success
                     await _repository.AddQuizAsync(quiz);
                     return RedirectToAction(nameof(Index));
                 }
                 catch (Exception ex)
                 {
+                    // Log creation errors and return 500
                     _logger.LogError(ex, "Error creating quiz.");
                     return StatusCode(500, "Error saving quiz.");
                 }
@@ -72,6 +81,7 @@ namespace QuizApp.Controllers
 
         public async Task<IActionResult> Edit(int id)
         {
+            // Load existing quiz to populate the edit form
             var quiz = await _repository.GetQuizByIdAsync(id);
             if (quiz == null) return NotFound();
             return View(quiz);
@@ -87,11 +97,13 @@ namespace QuizApp.Controllers
             {
                 try
                 {
+                    // Save changes via repository and return to the list on success
                     await _repository.UpdateQuizAsync(quiz);
                     return RedirectToAction(nameof(Index));
                 }
                 catch (Exception ex)
                 {
+                    // Log update errors and surface a 500
                     _logger.LogError(ex, "Error updating quiz with ID {Id}", id);
                     return StatusCode(500, "Error updating quiz.");
                 }
@@ -101,6 +113,7 @@ namespace QuizApp.Controllers
 
         public async Task<IActionResult> Delete(int id)
         {
+            // Present a confirmation page for deletion
             var quiz = await _repository.GetQuizByIdAsync(id);
             if (quiz == null) return NotFound();
             return View(quiz);
@@ -112,11 +125,13 @@ namespace QuizApp.Controllers
         {
             try
             {
+                // Perform deletion and redirect to list
                 await _repository.DeleteQuizAsync(id);
                 return RedirectToAction(nameof(Index));
             }
             catch (Exception ex)
             {
+                // Log deletion failure and return generic error
                 _logger.LogError(ex, "Error deleting quiz with ID {Id}", id);
                 return StatusCode(500, "Error deleting quiz.");
             }
