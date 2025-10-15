@@ -19,11 +19,12 @@
     </dl>
 </div>
 
-@* Client-side validation scripts *@
-<form asp-action="DeleteConfirmed" method="post">
-    <input type="hidden" asp-for="QuizId" />
+ @*delete confirmation view*@ 
+
+<form asp-action="Delete" method="post">
+    <input type="hidden" name="id" value="@Model.QuizId" />
     <button type="submit" class="btn btn-danger">Delete</button>
-    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+    <a asp-controller="Home" asp-action="Index" class="btn btn-secondary">Cancel</a>
 </form>
 
 

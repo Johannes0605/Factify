@@ -119,15 +119,14 @@ namespace QuizApp.Controllers
             return View(quiz);
         }
 
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
+    [HttpPost, ActionName("Delete")]
+    public async Task<IActionResult> DeleteConfirmed(int id)
         {
             try
             {
-                // Perform deletion and redirect to list
+                // Perform deletion and redirect to the Home page
                 await _repository.DeleteQuizAsync(id);
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index", "Quiz");
             }
             catch (Exception ex)
             {
